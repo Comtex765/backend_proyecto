@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine, text
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, declarative_base
 from dotenv import load_dotenv
 from colorama import Fore, Style
 
@@ -57,3 +56,4 @@ def test_db_connection():
         print(
             f"{Fore.RED}ERROR:{Style.RESET_ALL}     ❤️  Test connection failed: {e} ❤️\n"
         )
+test_db_connection()

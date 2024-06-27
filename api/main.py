@@ -4,7 +4,6 @@ from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from datetime import datetime, timedelta
 import jwt
-from . import models
 from . import schemas
 from . import crud
 from .database import get_db, test_db_connection
@@ -16,8 +15,9 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-app = FastAPI()
 test_db_connection()
+app = FastAPI()
+
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -31,6 +31,11 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
+
+@app.get("/")
+def route():
+    return {"success": "True"}
 
 
 @app.post("/usuarios/", response_model=schemas.Usuario)
